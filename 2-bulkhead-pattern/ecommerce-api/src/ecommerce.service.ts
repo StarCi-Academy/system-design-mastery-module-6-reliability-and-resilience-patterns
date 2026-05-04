@@ -1,4 +1,4 @@
-import { Injectable, TooManyRequestsException } from "@nestjs/common"
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common"
 
 /**
  * Lớp điều phối giới hạn số lượng request đồng thời (Bulkhead)
@@ -16,13 +16,14 @@ class ConcurrencyLimiter {
    *
    * @param fn - Hàm cần thực thi (EN: function to execute)
    * @returns Promise<T> - Kết quả của hàm callback (EN: callback result)
-   * @throws TooManyRequestsException - Khi vượt quá giới hạn bulkhead (EN: when exceeding bulkhead limit)
+   * @throws HttpException - Khi vượt quá giới hạn bulkhead (EN: when exceeding bulkhead limit)
    */
   async run<T>(fn: () => Promise<T>): Promise<T> {
     // Kiểm tra nếu số lượng request vượt quá giới hạn (EN: check if active requests exceed limit)
     if (this.active >= this.limit) {
-      throw new TooManyRequestsException(
+      throw new HttpException(
         `Bulkhead Error: History API is overloaded (exceeded ${this.limit} concurrent threads). Please try again later!`,
+        HttpStatus.TOO_MANY_REQUESTS,
       )
     }
 

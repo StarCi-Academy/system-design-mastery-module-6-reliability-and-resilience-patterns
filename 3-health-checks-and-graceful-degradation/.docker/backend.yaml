@@ -1,0 +1,17 @@
+﻿version: "3.8"
+
+services:
+  ecommerce-app:
+    image: starciacademy/reliability-and-resilience-patterns-healthchecks-ecommerce-app:latest
+    build:
+      context: ../ecommerce-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - starci-network
+
+networks:
+  starci-network:
+    external: true
+    name: starci-network

@@ -1,0 +1,17 @@
+﻿version: "3.8"
+
+services:
+  ecommerce-api:
+    image: starciacademy/reliability-and-resilience-patterns-bulkhead-ecommerce-api:latest
+    build:
+      context: ../ecommerce-api
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - starci-network
+
+networks:
+  starci-network:
+    external: true
+    name: starci-network
