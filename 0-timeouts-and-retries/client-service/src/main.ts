@@ -1,16 +1,9 @@
-import { NestFactory } from "@nestjs/core"
-import { AppModule } from "./app.module"
-
 /**
- * Hàm khởi chạy ứng dụng NestJS (EN: bootstrap function to start NestJS application)
+ * Entry Node (`nest build` → dist/main.js) — chỉ gọi bootstrap đã export.
+ * (EN: Node entry (`nest build` → dist/main.js) — invokes exported bootstrap only.)
  */
-async function bootstrap(): Promise<void> {
-  // Khởi tạo ứng dụng từ AppModule (EN: create application instance from AppModule)
-  const app = await NestFactory.create(AppModule)
+import {
+    bootstrap,
+} from "./bootstrap"
 
-  // Lắng nghe trên cổng 3000 (EN: listen on port 3000)
-  await app.listen(3000)
-}
-
-// Thực thi hàm bootstrap (EN: execute bootstrap function)
-bootstrap()
+void bootstrap()

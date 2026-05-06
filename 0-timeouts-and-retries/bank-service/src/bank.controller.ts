@@ -1,34 +1,38 @@
-import { Controller, Get } from "@nestjs/common"
+/**
+ * Controller giả lập ngân hàng — endpoint `GET /transfer` chờ 10s trước khi trả kết quả.
+ * (EN: Simulated bank controller — endpoint `GET /transfer` waits 10s before returning result.)
+ */
+import {
+    Controller,
+    Get,
+} from "@nestjs/common"
 
 /**
- * Hàm hỗ trợ dừng thực thi trong một khoảng thời gian
- * (EN: Helper function to pause execution for a given duration)
- *
- * @param ms - Thời gian chờ tính bằng mili giây (EN: wait time in milliseconds)
- * @returns Promise<void>
+ * Hàm dừng thực thi trong khoảng thời gian cho trước (milliseconds).
+ * (EN: Pauses execution for the given duration in milliseconds.)
  */
 function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms)
-  })
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms)
+    })
 }
 
 @Controller()
 export class BankController {
-  /**
-   * Endpoint thực hiện chuyển khoản (Giả lập chậm trễ 10s)
-   * (EN: endpoint to execute transfer - simulates 10s delay)
-   *
-   * @returns Promise<{ status: string }> - Trạng thái thành công (EN: Success status)
-   */
-  @Get("transfer")
-  async transfer(): Promise<{ status: string }> {
-    // Giả lập hệ thống xử lý chậm (EN: simulate slow processing system)
-    await sleep(10000)
+    /**
+     * Logic — giả lập xử lý chuyển khoản rất chậm (10s) để client-service kích hoạt Timeout.
+     * Code — `sleep(10000)` rồi trả `{ status: "success" }`; client timeout 3s nên không bao giờ nhận được response này.
+     * (EN Logic: Simulates an extremely slow transfer (10s) so client-service triggers Timeout.)
+     * (EN Code: `sleep(10000)` then returns `{ status: "success" }`; client times out at 3s so never receives this.)
+     */
+    @Get("transfer")
+    async transfer(): Promise<{ status: string }> {
+        // Giả lập hệ thống xử lý chậm 10 giây.
+        // (EN: Simulate 10-second slow processing.)
+        await sleep(10000)
 
-    // Trả về trạng thái thành công (EN: return success status)
-    return {
-      status: "success",
+        return {
+            status: "success",
+        }
     }
-  }
 }
