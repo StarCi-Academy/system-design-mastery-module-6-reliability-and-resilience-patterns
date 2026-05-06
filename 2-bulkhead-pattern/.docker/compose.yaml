@@ -29,8 +29,7 @@ services:
   # Ecommerce API — NestJS service phân tách tài nguyên xử lý đồng thời giữa History (max 2) và Checkout (không giới hạn).
   # (EN: Ecommerce API — NestJS service partitioning concurrent resources between History (max 2) and Checkout (unlimited).)
   ecommerce-api:
-    build:
-      context: ../ecommerce-api
+    image: starciacademy/reliability-and-resilience-patterns-bulkhead-ecommerce-api:latest
     environment:
       PORT: 3000
       HISTORY_CONCURRENCY_LIMIT: 2

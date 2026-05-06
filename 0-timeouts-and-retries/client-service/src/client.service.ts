@@ -44,6 +44,7 @@ export class ClientService {
                     message: "Transfer successful",
                 }
             } catch (error: unknown) {
+                this.logger.error(error);
                 const isLastAttempt = attempt > maxRetries
 
                 if (isLastAttempt) {

@@ -30,8 +30,7 @@ services:
   # Bank service — giả lập dịch vụ ngân hàng xử lý chậm 10 giây để kích hoạt Timeout.
   # (EN: Bank service — simulates a slow bank processing 10s to trigger Timeout.)
   bank-service:
-    build:
-      context: ../bank-service
+    image: starciacademy/reliability-and-resilience-patterns-timeouts-bank-service:latest
     ports:
       # Ánh xạ cổng host 3001 → container 3001 (HTTP API bank).
       # (EN: Map host port 3001 → container 3001 (HTTP API bank).)
@@ -40,10 +39,9 @@ services:
       - "0-timeouts-and-retries"
 
   # Client service — gọi bank-service với Timeout 3s và Retry (Exponential Backoff + Jitter).
-  # (EN: Client service — calls bank-service with 3s Timeout and Retry (Exponential Backoff + Jitter).)
+  # (EN: Client service — calls bank-service với 3s Timeout and Retry (Exponential Backoff + Jitter).)
   client-service:
-    build:
-      context: ../client-service
+    image: starciacademy/reliability-and-resilience-patterns-timeouts-client-service:latest
     depends_on:
       # Khởi động sau bank-service (thứ tự khởi tạo; không chờ healthy).
       # (EN: Starts after bank-service (startup order; no health-aware wait).)

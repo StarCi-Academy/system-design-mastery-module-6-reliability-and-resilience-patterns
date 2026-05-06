@@ -30,8 +30,7 @@ services:
   # Inventory service — dịch vụ kho hàng giả lập, báo lỗi từ request thứ 4 để ép Circuit Breaker chuyển trạng thái.
   # (EN: Inventory service — simulated inventory, starts failing from the 4th request to trigger Circuit Breaker state change.)
   inventory-service:
-    build:
-      context: ../inventory-service
+    image: starciacademy/reliability-and-resilience-patterns-circuit-breaker-inventory-service:latest
     environment:
       PORT: "3001"
       FAILURE_AFTER_SUCCESS_COUNT: "3"
@@ -45,8 +44,7 @@ services:
   # API Gateway — tích hợp Opossum Circuit Breaker bọc lệnh gọi xuống inventory-service.
   # (EN: API Gateway — integrates Opossum Circuit Breaker wrapping calls to inventory-service.)
   api-gateway:
-    build:
-      context: ../api-gateway
+    image: starciacademy/reliability-and-resilience-patterns-circuit-breaker-api-gateway:latest
     environment:
       PORT: "3000"
       INVENTORY_BASE_URL: http://inventory-service:3001

@@ -21,8 +21,7 @@ services:
   # NestJS demo app cho Health Check + Graceful Degradation.
   # (EN: NestJS demo app for Health Check + Graceful Degradation.)
   ecommerce-app:
-    build:
-      context: ../ecommerce-app
+    image: starciacademy/reliability-and-resilience-patterns-healthchecks-ecommerce-app:latest
     environment:
       PORT: 3000
       DEGRADE_HEAP_THRESHOLD_MB: 120
